@@ -22,10 +22,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { LoginComponent } from './user/login/login.component';
 import { SignupComponent } from './user/signup/signup.component';
 import {DashboardComponent} from './dashboard/dashboard/dashboard.component';
-// import { HomePageComponent } from './list-management/home-page/home-page.component';
-// import { ListViewComponent } from './list-management/list-view/list-view.component';
-// import { ListEditComponent } from './list-management/list-edit/list-edit.component';
-// import { ListCreateComponent } from './list-management/list-create/list-create.component';
+import {SelectiveIssueDescriptionComponent} from './issue-description/selective-issue-description/selective-issue-description.component';
 
 import { HttpClientModule } from '@angular/common/http'; 
 
@@ -34,7 +31,16 @@ import { ToastrModule } from 'ngx-toastr';
 //for socila media login
 import { SocialLoginModule, AuthServiceConfig } from "angularx-social-login";
 import { GoogleLoginProvider, FacebookLoginProvider } from "angularx-social-login";
- 
+
+//for file upload
+import { FileSelectDirective } from 'ng2-file-upload';
+
+//for text editor
+import { CKEditorModule } from 'ngx-ckeditor';
+
+//for reactive forms
+import { ReactiveFormsModule } from '@angular/forms';
+
 let config = new AuthServiceConfig([
   {
     id: GoogleLoginProvider.PROVIDER_ID,
@@ -52,16 +58,17 @@ export function provideConfig() {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,SelectiveIssueDescriptionComponent,DashboardComponent,FileSelectDirective
   ],
   imports: [
-    BrowserModule,HttpClientModule,SocialLoginModule,
-    AppRoutingModule,BrowserAnimationsModule,FormsModule,UserModule, ToastrModule.forRoot(),
+    BrowserModule,HttpClientModule,SocialLoginModule,ReactiveFormsModule,
+    AppRoutingModule,BrowserAnimationsModule,FormsModule,UserModule, ToastrModule.forRoot(),CKEditorModule,
     RouterModule.forRoot([ 
 	{path:'login',component:LoginComponent},
     {path:'',redirectTo:'login',pathMatch:'full'},
     {path:'signup',component:SignupComponent},
     {path:'dashboard',component:DashboardComponent},
+    {path:'issueDescription',component:SelectiveIssueDescriptionComponent},
     {path:'*',component:LoginComponent},
     {path:'**',component:LoginComponent}
     ])

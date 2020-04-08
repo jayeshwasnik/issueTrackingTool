@@ -17,7 +17,7 @@ import { Observable } from 'rxjs';
 export class AppService {
   public baseUrl="http://localhost:3000/api/v1";
   
-  public apiKey='YzY4YmU3MjkzNjFjMmQ1MzY3ZGQ1YzI3ZTM3NzcxOTBMmEzY2NlM2VjYjE3YjFjNWIzMWYwMmEzOTFkMThiZDNjY2IyZTkwNjAwM2NmMjFmOWRhOGNjMA==';
+  public apiKey='jayeshApiKey';
 
   constructor(public http:HttpClient,private cookieService:CookieService) { }
 
@@ -27,7 +27,7 @@ export class AppService {
       .set("password",data.password)
         .set("lastName",data.lastName)
           .set("email",data.email)
-            .set("mobileNumber	",data.mobileNumber	)
+            .set("mobileNumber",data.mobile)
               .set("apiKey",this.apiKey);
               return this.http.post(`${this.baseUrl}/users/signup`,params);
     
@@ -57,7 +57,8 @@ export class AppService {
   public userLogin(data): Observable<any>{
     const params=new HttpParams()
       .set("password",data.password)
-          .set("email",data.email);
+          .set("email",data.email) 
+          .set("apiKey",this.apiKey);
           this.cookieService.set('loginMethod',"local");      
    return this.http.post(`${this.baseUrl}/users/login`,params);
     console.log(data);

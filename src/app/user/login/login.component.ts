@@ -78,14 +78,15 @@ this.appService.userLogin(data).subscribe(apiResponse=>{
   if (apiResponse.status===200) 
   {this.toastr.success("Login Succesful");
    this.router.navigate(['dashboard']);
-  }
+  
 
 console.log(apiResponse);
 //for setting cookies
-this.cookieService.set('authToken',apiResponse.data.token);
-
+this.cookieService.set('authToken',apiResponse.data.authToken);
+localStorage.setItem("authToken",apiResponse.data.authToken);
 //setting the data in local storage
 this.appService.setUserInfoInLocalStorage(apiResponse.data.userDetails);
+  }
 },
 
 

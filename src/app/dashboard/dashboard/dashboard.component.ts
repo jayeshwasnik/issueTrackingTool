@@ -21,7 +21,7 @@ export class DashboardComponent implements OnInit {
   constructor(public Appservice:AppService,public cookieService:CookieService,public router:Router,private toastr:ToastrService ) { }
 
   ngOnInit() {
-    this.authToken=this.cookieService.get('authToken');
+    this.authToken=localStorage.getItem("authToken");
     this.userInfo=this.Appservice.getUserInfoInLocalStorage;
     this.checkStatus();
 
@@ -29,17 +29,37 @@ export class DashboardComponent implements OnInit {
 
 
   public checkStatus:any=()=>{
-    if(this.cookieService.get('authToken')===undefined || this.cookieService.get('authToken')==='' || this.cookieService.get('authToken')===null){
+    if(localStorage.getItem("authToken")===undefined || localStorage.getItem("authToken")==='' || localStorage.getItem("authToken")===null){
       this.router.navigate(['/']);
      
       console.log("authtoken not found");
       return false;
     }else{
-      console.log(this.cookieService.get('authToken'))
+      console.log(localStorage.getItem("authToken"))
       console.log("authtoken  found");
   return true;
  
     }
-  }
+  //localStorage.getItem("authToken")  
 
+
+}
+
+
+// public checkStatus:any=()=>{
+//   if(this.cookieService.get('authToken')===undefined || this.cookieService.get('authToken')==='' || this.cookieService.get('authToken')===null){
+//     this.router.navigate(['/']);
+   
+//     console.log("authtoken not found");
+//     return false;
+//   }else{
+//     console.log(this.cookieService.get('authToken'))
+//     console.log("authtoken  found");
+// return true;
+
+//   }
+
+
+
+// }
 }

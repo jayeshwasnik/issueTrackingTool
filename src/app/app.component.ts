@@ -13,7 +13,7 @@ import { AuthService } from "angularx-social-login";
 export class AppComponent {
   title = 'issue-tracking-tool';
 
-
+//this constructor was not there in starting and all the dependencies,I added it
   constructor(private _route: ActivatedRoute, private router: Router, public appService: AppService,private toastr:ToastrService,private cookieService:CookieService
     ,private authService: AuthService){};
 
