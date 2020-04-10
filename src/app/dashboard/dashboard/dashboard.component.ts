@@ -15,10 +15,7 @@ import { Subject } from 'rxjs';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  @ViewChild(DataTableDirective)
-  dtElement: DataTableDirective;
-  dtOptions: DataTables.Settings = {};
-  dtTrigger: Subject<any> = new Subject();
+  
  
   public authToken:any;
   public userInfo:any;
@@ -71,7 +68,6 @@ this.issues=response;
 console.log(this.issues)
 
 })
-this.dtTrigger.next();
 
 }
 

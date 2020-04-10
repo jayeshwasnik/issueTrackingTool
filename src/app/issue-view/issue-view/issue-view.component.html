@@ -1,3 +1,33 @@
-<h2>Two-way Binding Example</h2>    
-   <input [(ngModel)]="fullName" /> <br/><br/>    
-<p> {{fullName}} </p>  
+
+
+<div class="row p-0 m-0">  
+  
+   <table datatable="ng"  [dtOptions]="dtOptions" class="row-border hover table-bordered">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Status</th>
+          <th>Reporter</th>
+          <th>assignee</th>
+          <th>watcher</th>
+          <th>comments</th>
+          <th>description</th>
+          <th>attachment</th>
+          <th>Date Reported</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr >
+          <td>{{issue1.title}}</td>
+          <td>{{issue1.status}}</td>
+          <td>{{issue1.reporter}}</td>
+          <td>{{issue1.assignee}}</td>
+          <td>{{issue1.watcher}}</td>
+          <td>{{issue1.comments}}</td>
+          <td>{{issue1.description}}</td>
+          <td>{{issue1.attachment}}</td>
+          <td>{{issue1.timeOfCreation}}</td>
+          </tr>
+      </tbody>
+    </table>
+</div>  
