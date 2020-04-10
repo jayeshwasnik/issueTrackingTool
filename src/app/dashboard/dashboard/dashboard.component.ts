@@ -1,32 +1,48 @@
 import { Component, OnInit ,ViewContainerRef, ViewChild, ElementRef} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { IssueService } from "./../../issue.service";
 
 import {AppService} from './../../app.service';
 import {CookieService} from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-
-
+import { DataTableDirective } from 'angular-datatables';
+import { Subject } from 'rxjs';
 @Component({
+
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
+  @ViewChild(DataTableDirective)
+  dtElement: DataTableDirective;
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
+ 
   public authToken:any;
   public userInfo:any;
+  public issues=[];
+  public searchedValue;
 
-  constructor(public Appservice:AppService,public cookieService:CookieService,public router:Router,private toastr:ToastrService ) { }
+  showContent;
+  //headElements = ['id', 'first', 'last', 'handle'];
+  //dtOptions: any = {};
+
+  constructor(public appService:AppService,public cookieService:CookieService,public router:Router,private toastr:ToastrService,public issueService:IssueService ) { }
 
   ngOnInit() {
+    
+    setTimeout(()=>this.showContent=true, 250);
     this.authToken=localStorage.getItem("authToken");
-    this.userInfo=this.Appservice.getUserInfoInLocalStorage;
+    this.userInfo=this.appService.getUserInfoInLocalStorage;
     this.checkStatus();
-
+    this.getUserIssues();
+     
   }
 
+
+  
 
   public checkStatus:any=()=>{
     if(localStorage.getItem("authToken")===undefined || localStorage.getItem("authToken")==='' || localStorage.getItem("authToken")===null){
@@ -44,6 +60,24 @@ export class DashboardComponent implements OnInit {
 
 
 }
+
+public getUserIssues:any=()=>{
+  let userinfo=this.appService.getUserInfoInLocalStorage();
+  let loggedInUser=userinfo.userName;
+  console.log("value passed to getissuues"+loggedInUser)
+this.issueService.getIssuesOfUser(loggedInUser).subscribe((response)=>{
+console.log(response)
+this.issues=response;
+console.log(this.issues)
+
+})
+this.dtTrigger.next();
+
+}
+
+
+
+
 
 
 // public checkStatus:any=()=>{

@@ -17,13 +17,19 @@ export class AppComponent {
   constructor(private _route: ActivatedRoute, private router: Router, public appService: AppService,private toastr:ToastrService,private cookieService:CookieService
     ,private authService: AuthService){};
 
+
+
+
+
 public signOutAppComponent:any =() =>{
 
   this.authService.signOut();
   console.log("signed out  of social logins");
+  // localStorage.clear();
+    // this.authService.signOut();
+     this.cookieService.deleteAll;
  
- 
-
+  localStorage.clear();
 // if(this.cookieService.get('loginMethod')=='social'){
 //   this.authService.signOut();
 //   console.log("signed out  of social logins");

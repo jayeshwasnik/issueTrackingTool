@@ -1,1 +1,29 @@
-<p>search works!</p>
+
+<div class='container-fluid'>
+
+    <div class="col-sm p-5 text-center">
+  
+      <label for="description" class="sr-only">description</label>
+  
+      <table datatable *ngIf="showContent" class="row-border hover table-bordered">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Status</th>
+        <th>Reporter</th>
+        <th>Date Reported</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let issue of Issues;">
+            <td>{{issue.title}}</td>
+            <td>{{issue.status}}</td>
+            <td>{{issue.reporter}}</td>
+            <td>{{issue.timeOfCreation|date:'short'}}</td>
+            </tr>
+    </tbody>
+  </table>
+  
+  </div>
+  </div>
+  

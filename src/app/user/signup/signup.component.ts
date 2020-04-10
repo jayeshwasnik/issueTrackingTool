@@ -10,11 +10,13 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
+  public userName: any;
   public firstName: any;
   public lastName: any;
   public mobile: any;
   public email: any;
   public password: any;
+
   //public apiKey: any;
 
   constructor(  
@@ -56,6 +58,7 @@ export class SignupComponent implements OnInit {
     // } else {
 
       let data = {
+        userName: this.userName,
         firstName: this.firstName,
         lastName: this.lastName,
         mobile: this.mobile,

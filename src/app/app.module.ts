@@ -23,7 +23,8 @@ import { LoginComponent } from './user/login/login.component';
 import { SignupComponent } from './user/signup/signup.component';
 import {DashboardComponent} from './dashboard/dashboard/dashboard.component';
 import {SelectiveIssueDescriptionComponent} from './issue-description/selective-issue-description/selective-issue-description.component';
-
+import {SearchComponent} from './search/search/search.component';
+import {IssueViewComponent} from './issue-view/issue-view/issue-view.component';
 import { HttpClientModule } from '@angular/common/http'; 
 
 import { ToastrModule } from 'ngx-toastr';
@@ -40,6 +41,11 @@ import { CKEditorModule } from 'ngx-ckeditor';
 
 //for reactive forms
 import { ReactiveFormsModule } from '@angular/forms';
+
+import { DataTablesModule } from 'angular-datatables';
+
+
+
 
 let config = new AuthServiceConfig([
   {
@@ -58,19 +64,21 @@ export function provideConfig() {
 
 @NgModule({
   declarations: [
-    AppComponent,SelectiveIssueDescriptionComponent,DashboardComponent,FileSelectDirective
+    AppComponent,SelectiveIssueDescriptionComponent,DashboardComponent,FileSelectDirective,SearchComponent,
   ],
   imports: [
-    BrowserModule,HttpClientModule,SocialLoginModule,ReactiveFormsModule,
+    BrowserModule,HttpClientModule,SocialLoginModule,ReactiveFormsModule, DataTablesModule,
     AppRoutingModule,BrowserAnimationsModule,FormsModule,UserModule, ToastrModule.forRoot(),CKEditorModule,
     RouterModule.forRoot([ 
 	{path:'login',component:LoginComponent},
     {path:'',redirectTo:'login',pathMatch:'full'},
+    {path:'search/:searchedValue',component:SearchComponent},
+    {path:'viewIssue/:issueId',component:IssueViewComponent},
     {path:'signup',component:SignupComponent},
     {path:'dashboard',component:DashboardComponent},
     {path:'issueDescription',component:SelectiveIssueDescriptionComponent},
     {path:'*',component:LoginComponent},
-    {path:'**',component:LoginComponent}
+    {path:'**',component:LoginComponent},
     ])
   ],
   providers: [    {

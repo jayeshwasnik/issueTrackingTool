@@ -6,9 +6,9 @@
 
   <div class="row p-0 m-0">
   
-    <div class="col-sm"></div>
+    <div class="col-sm-2"></div>
   
-    <div class="col-sm p-5">
+    <div class="col-sm-8 p-5">
   
       <h2 class="form-signin-heading">Create a new issue</h2>
   
@@ -56,17 +56,10 @@
     </div>
     <br>
   
-    <!-- Image Preview -->
-    <div class="form-group">
-      <div class="preview" *ngIf="preview && preview !== null">
-        <img [src]="preview" [alt]="form.value.name">
-      </div>
-    </div>
-    <br>
     
     <!-- File Input -->
     <div class="form-group">
-      <input type="file" (change)="uploadFile($event)">
+      <input type="file" name="attachment" multiple (change)="uploadFile($event)">
     </div>
   
     <br>
@@ -74,34 +67,48 @@
   
 <span>Add Assignee: </span>
 
-<label for="assignee" class="sr-only">Assignee</label>
+<!-- <label for="assignee" class="sr-only">Assignee</label>
 
 <div class="form-group input-group-lg">
   <input type="text" id="assignee" class="form-control" placeholder="assignee" formControlName="assignee" required>
 </div>
+<br> -->
+<div class="form-group input-group-lg">
+ 
+<select class="form-control input-group-lg" formControlName="assignee" (change)="changeAssignee($event)">
+  <option value="" >Choose an assignee</option>
+  <option *ngFor="let user of Users" [ngValue]="user">{{user}}</option>
+</select>
+</div>
 <br>
-
 <br>
-
   
 <span>Add Watcher: </span>
 
-<label for="watcher" class="sr-only">watcher</label>
+<!-- <label for="watcher" class="sr-only">watcher</label>
 
 <div class="form-group input-group-lg">
   <input type="text" id="watcher" class="form-control" placeholder="watcher" formControlName="watcher" required>
 </div>
-<br>
-
+<br> -->
+<div class="form-group input-group-lg">
+ 
+  <select class="form-control input-group-lg" formControlName="watcher" (change)="changeWatcher($event)">
+    <option value="" >Choose Watchers</option>
+    <option *ngFor="let user of Users" [ngValue]="user">{{user}}</option>
+  </select>
+  </div>
+  <br>
+  <br>
   
-<span>Name of Reporter:  </span>
+<!-- <span>Name of Reporter:  </span>
 
 <label for="reporter" class="sr-only">Reporter</label>
 
 <div class="form-group input-group-lg">
   <input type="text" id="reporter" class="form-control" placeholder="reporter" formControlName="reporter" required>
 </div>
-<br>
+<br> -->
 
 
   
@@ -129,6 +136,6 @@
 
 </div>
   
-<div class="col-sm"></div>
+<div class="col-sm-2"></div>
 
 </div>

@@ -22,15 +22,28 @@ export class AppService {
   constructor(public http:HttpClient,private cookieService:CookieService) { }
 
   public userSignup(data):Observable<any>{
+    if(data.social==true){
     const params=new HttpParams()
+    .set("userName",data.userName)
     .set("firstName",data.firstName)
       .set("password",data.password)
         .set("lastName",data.lastName)
           .set("email",data.email)
             .set("mobileNumber",data.mobile)
-              .set("apiKey",this.apiKey);
+              .set("apiKey",this.apiKey)
+              .set("social",data.social);
               return this.http.post(`${this.baseUrl}/users/signup`,params);
-    
+    }
+    else{
+    const params=new HttpParams()
+    .set("userName",data.userName)
+    .set("firstName",data.firstName)
+      .set("password",data.password)
+        .set("lastName",data.lastName)
+          .set("email",data.email)
+            .set("mobileNumber",data.mobile)
+              .set("apiKey",this.apiKey)
+              return this.http.post(`${this.baseUrl}/users/signup`,params);}
 
   }
 
@@ -51,9 +64,12 @@ export class AppService {
     localStorage.setItem("userInfo",JSON.stringify(data));
   }
 
+
   public getUserInfoInLocalStorage(){
     return JSON.parse(localStorage.getItem("userInfo"));
   }
+
+
   public userLogin(data): Observable<any>{
     const params=new HttpParams()
       .set("password",data.password)
@@ -62,6 +78,11 @@ export class AppService {
           this.cookieService.set('loginMethod',"local");      
    return this.http.post(`${this.baseUrl}/users/login`,params);
     console.log(data);
+  }
+
+
+  public getAllUserNames(): Observable<any>{
+    return this.http.get(`${this.baseUrl}/users/getAllUserNames`);
   }
 
 }

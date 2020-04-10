@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-//for file upload
-import {  FileUploader, FileSelectDirective } from 'ng2-file-upload';
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { IssueService } from "./../../issue.service";
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { AppService } from './../../app.service';
 
-//const URL = 'http://localhost:3000/api/v1/image';
 
 
 
@@ -20,22 +18,21 @@ import { Router } from '@angular/router';
  
 
 export class SelectiveIssueDescriptionComponent implements OnInit {
- // const URL = 'http://localhost:3000/api/newIssue';
+ 
 
 public title;
 public description;
 public assignee;
 public watcher;
-//public timeOfCreation;
-//public status;
 public reporter;
 public comments;
+public user;
 
 public preview: string;
 public form: FormGroup;
 public percentDone: any = 0;
-public  users = [];
-
+//public  users = [];
+files:string  []  =  [];
 
 //for text editor
 public editorValue: string = '';
@@ -44,7 +41,7 @@ public editorValue: string = '';
 //public uploader: FileUploader = new FileUploader({url: URL, itemAlias: 'photo'});
 
   constructor( public fb: FormBuilder,
-    public router: Router,
+    public router: Router,public appService: AppService,
     public issueService: IssueService) {
       // Reactive Form
     this.form = this.fb.group({
@@ -62,13 +59,28 @@ public editorValue: string = '';
 
 
   ngOnInit() {
-    // this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
-    // this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
-    //      console.log('FileUpload:uploaded:', item, status, response);
-    //      alert('File uploaded successfully');
-    //  };
+    this.setUsers();
   }
 
+
+
+public Users=[];
+
+ public setUsers=()=>{
+  this.appService.getAllUserNames().subscribe((response)=>{
+    var i=0;
+    for(const x in response){
+     
+      this.Users[i]=response[x].userName;
+      i++;
+       }
+    
+      })
+    }
+
+
+
+  //working upload files function
 
   uploadFile(event) {
     const file = (event.target as HTMLInputElement).files[0];
@@ -86,18 +98,48 @@ public editorValue: string = '';
   }
 
 
+
+
+  // uploadFile(event)  {
+  //   for  (var i =  0; i <  event.target.files.length; i++)  {  
+  //       this.files.push(event.target.files[i]);
+  //   }
+  // }
+
+  changeAssignee(event){
+    const assigneevar=event.target.value;
+    this.form.patchValue({
+      assignee: assigneevar.slice(3)
+    });
+    this.form.get('assignee').updateValueAndValidity()
+  }
+
+
+  changeWatcher(event){
+    const watcherevar=event.target.value;
+    this.form.patchValue({
+      watcher: watcherevar.slice(3)
+    });
+    this.form.get('watcher').updateValueAndValidity()
+  }
+
+
   submitForm() {
+    
+    let userinfo=this.appService.getUserInfoInLocalStorage();
+    let loggedInUser=userinfo.userName;
     let data = {
-      firstName: this.form.value.name,
+     
       title: this.form.value.title,
       description: this.form.value.description,
       assignee: this.form.value.assignee,
       watcher: this.form.value.watcher,
-      //have to add the logged in user
-      reporter: this.form.value.reporter,
+      reporter: loggedInUser,
       comments: this.form.value.comments,
       attachment: this.form.value.attachment
     }
+
+    console.log(data);
 
 
     this.issueService.createIssue(
@@ -115,7 +157,7 @@ public editorValue: string = '';
           console.log(`Uploaded! ${this.percentDone}%`);
           break;
         case HttpEventType.Response:
-          console.log('User successfully created!', event.body);
+          console.log('Issue successfully created!', event.body);
           this.percentDone = false;
           this.router.navigate(['dashboard'])
       }

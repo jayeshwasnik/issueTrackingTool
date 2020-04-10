@@ -1,13 +1,44 @@
-<p>issue table is coming soon</p>
-<!-- <img src="{{ user.photoUrl }}">
-<div>
-  <h4>{{ user.name }}</h4>
-  <p>{{ user.email }}</p>
-</div> -->
 
 
+<div class='container-fluid'>
+
+  <div class="col-sm p-5 text-center">
+
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" placeholder="Search in all issues" aria-label="Search in all issues" aria-describedby="basic-addon2" [(ngModel)]="searchedValue">
+      <div class="input-group-append">
+        <button class="btn btn-primary" type="button" [routerLink]="['/search',searchedValue]" >SEARCH</button>
+      </div>
+    </div>
+    <br>
+    <br>
+
+    <table datatable="ng" *ngIf="showContent" [dtOptions]="dtOptions" class="row-border hover table-bordered">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Status</th>
+      <th>Reporter</th>
+      <th>Date Reported</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let issue of issues;" [routerLink]="['/viewIssue',issue.issueId]">
+      <td>{{issue.title}}</td>
+      <td>{{issue.status}}</td>
+      <td>{{issue.reporter}}</td>
+      <td>{{issue.timeOfCreation|date:'short'}}</td>
+      </tr>
+  </tbody>
+</table>
+
+</div>
+
+
+
+</div>
 
 <div class="col-sm p-5 text-center" [routerLink]="['/issueDescription']">
-  <button type="button" class="btn btn-primary">go to issue description</button>
+  <button type="button" class="btn btn-primary">Create a New Issue</button>
 </div>
 
