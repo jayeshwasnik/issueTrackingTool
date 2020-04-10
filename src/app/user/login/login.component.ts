@@ -89,7 +89,7 @@ this.appService.setUserInfoInLocalStorage(apiResponse.data.userDetails);
 
 
 
-error=>{this.toastr.error("there was an error")});
+error=>{});
 console.log(data);
 
 
@@ -163,7 +163,7 @@ this.appService.setUserInfoInLocalStorage(apiResponse.data.userDetails);
 
 
 
-error=>{this.toastr.error("there was an error")});
+error=>{});
 console.log(data);
 
 
